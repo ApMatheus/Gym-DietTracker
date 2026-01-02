@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model DiaDaSemana {
@@ -65,7 +66,7 @@ model Refeicao {
 model Alimento {
   id         String   @id @default(cuid())
   nome       String
-  quantidade String?  // Ex: "100g", "1 unidade", "200ml"
+  quantidade String?
   calorias   Int      @default(0)
   proteinas  Float    @default(0)
   refeicaoId String
@@ -76,11 +77,10 @@ model Alimento {
   @@index([refeicaoId])
 }
 
-// Configurações do sistema (para controlar reset semanal)
 model SystemConfig {
-  id             String   @id @default(cuid())
-  key            String   @unique
-  value          String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
