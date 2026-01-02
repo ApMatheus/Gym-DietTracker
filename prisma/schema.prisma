@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model DiaDaSemana {
+  id        String     @id @default(cuid())
+  nome      String     @unique
+  ordem     Int        @default(0)
+  treinos   Treino[]
+  refeicoes Refeicao[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Treino {
+  id            String      @id @default(cuid())
+  nome          String
+  diaDaSemanaId String
+  diaDaSemana   DiaDaSemana @relation(fields: [diaDaSemanaId], references: [id], onDelete: Cascade)
+  exercicios    Exercicio[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([diaDaSemanaId])
+}
+
+model Exercicio {
+  id         String   @id @default(cuid())
+  nome       String
+  series     Int      @default(3)
+  repeticoes Int      @default(10)
+  carga      Float    @default(0)
+  concluido  Boolean  @default(false)
+  treinoId   String
+  treino     Treino   @relation(fields: [treinoId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([treinoId])
+}
+
+model Refeicao {
+  id            String      @id @default(cuid())
+  nome          String
+  calorias      Int         @default(0)
+  proteinas     Float       @default(0)
+  concluida     Boolean     @default(false)
+  diaDaSemanaId String
+  diaDaSemana   DiaDaSemana @relation(fields: [diaDaSemanaId], references: [id], onDelete: Cascade)
+  alimentos     Alimento[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([diaDaSemanaId])
+}
+
+model Alimento {
+  id         String   @id @default(cuid())
+  nome       String
+  quantidade String?  // Ex: "100g", "1 unidade", "200ml"
+  calorias   Int      @default(0)
+  proteinas  Float    @default(0)
+  refeicaoId String
+  refeicao   Refeicao @relation(fields: [refeicaoId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([refeicaoId])
+}
+
+// Configurações do sistema (para controlar reset semanal)
+model SystemConfig {
+  id             String   @id @default(cuid())
+  key            String   @unique
+  value          String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

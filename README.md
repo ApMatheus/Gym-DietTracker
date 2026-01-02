@@ -1,36 +1,151 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏋️ Gym & Diet Tracker
 
-## Getting Started
+Sistema completo de controle de treino e dieta desenvolvido com Next.js, TypeScript, Prisma e TailwindCSS.
 
-First, run the development server:
+## 🚀 Stack
+
+- **Next.js 16** (App Router)
+- **TypeScript**
+- **Prisma ORM**
+- **SQLite** (desenvolvimento) / PostgreSQL ready
+- **TailwindCSS 4**
+- **React Server Components + Client Components**
+- **Zod** (validação)
+- **Server Actions**
+- **Lucide React** (ícones)
+
+## 📋 Funcionalidades
+
+### ✅ Treinos
+- Criar treino por dia da semana
+- Adicionar exercícios ao treino
+- Editar nome, séries, repetições e carga
+- Checkbox para marcar exercício como feito
+- Excluir exercício
+
+### ✅ Refeições
+- Criar refeições por dia
+- Informar calorias e proteínas
+- Checkbox de refeição concluída
+- Editar e excluir refeições
+
+### ✅ Interface
+- Layout em cards
+- Separação clara por dias da semana
+- UI moderna, limpa e responsiva
+- Dark mode nativo
+- Feedback visual ao marcar como concluído
+- Barra de progresso diária
+- Total de calorias e proteínas por dia
+
+## 🗂️ Estrutura de Dados
+
+```
+DiaDaSemana (1) ─┬─> (N) Treino (1) ──> (N) Exercício
+                 └─> (N) Refeição
+```
+
+## 🛠️ Como Rodar
+
+### 1. Instalar dependências
+
+```bash
+npm install
+```
+
+### 2. Configurar banco de dados
+
+```bash
+# Gerar o Prisma Client e criar o banco
+npx prisma db push
+
+# Popular com dados de exemplo
+npm run db:seed
+```
+
+### 3. Rodar em desenvolvimento
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse: [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📦 Scripts Disponíveis
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Comando | Descrição |
+|---------|-----------|
+| `npm run dev` | Inicia servidor de desenvolvimento |
+| `npm run build` | Build de produção |
+| `npm run start` | Inicia servidor de produção |
+| `npm run db:push` | Sincroniza schema com banco |
+| `npm run db:seed` | Popula banco com dados exemplo |
+| `npm run db:studio` | Abre Prisma Studio (GUI) |
+| `npm run db:migrate` | Executa migrações |
+| `npm run db:reset` | Reseta banco de dados |
 
-## Learn More
+## 🔧 Configuração para PostgreSQL
 
-To learn more about Next.js, take a look at the following resources:
+Para usar PostgreSQL em produção, altere o `prisma/schema.prisma`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+E atualize a variável `DATABASE_URL` no `.env`:
 
-## Deploy on Vercel
+```
+DATABASE_URL="postgresql://user:password@localhost:5432/gym_diet_tracker"
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📁 Estrutura de Pastas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+gym-diet-tracker/
+├── prisma/
+│   ├── schema.prisma      # Schema do banco
+│   └── seed.ts            # Dados de exemplo
+├── src/
+│   ├── actions/           # Server Actions
+│   │   ├── dia.ts
+│   │   ├── exercicio.ts
+│   │   ├── refeicao.ts
+│   │   └── treino.ts
+│   ├── app/
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx       # Visão semanal
+│   ├── components/
+│   │   ├── AddRefeicaoForm.tsx
+│   │   ├── AddTreinoForm.tsx
+│   │   ├── DiaCard.tsx
+│   │   ├── ExercicioCard.tsx
+│   │   ├── Header.tsx
+│   │   ├── ProgressBar.tsx
+│   │   ├── RefeicaoCard.tsx
+│   │   └── TreinoCard.tsx
+│   ├── lib/
+│   │   ├── prisma.ts      # Prisma client
+│   │   └── validations.ts # Schemas Zod
+│   └── types/
+│       └── index.ts
+├── .env
+├── package.json
+└── README.md
+```
+
+## 🎨 Screenshots
+
+A interface apresenta:
+- Cards para cada dia da semana
+- Barras de progresso para exercícios e refeições
+- Totais de calorias e proteínas consumidas
+- Modo escuro elegante
+- Animações suaves
+
+## 📝 Licença
+
+MIT
