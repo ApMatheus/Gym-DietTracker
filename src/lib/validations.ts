@@ -53,3 +53,4 @@ export type UpdateExercicioInput = z.infer<typeof updateExercicioSchema>
 export type CreateRefeicaoInput = z.infer<typeof createRefeicaoSchema>
 export type UpdateRefeicaoInput = z.infer<typeof updateRefeicaoSchema>
 
+

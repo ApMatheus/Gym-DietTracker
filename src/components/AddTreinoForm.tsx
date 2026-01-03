@@ -77,3 +77,4 @@ export function AddTreinoForm({ diaDaSemanaId }: AddTreinoFormProps) {
   )
 }
 
+

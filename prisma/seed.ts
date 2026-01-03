@@ -11,6 +11,7 @@ async function main() {
   await prisma.refeicao.deleteMany()
   await prisma.treino.deleteMany()
   await prisma.diaDaSemana.deleteMany()
+  await prisma.systemConfig.deleteMany()
 
   console.log('🗑️  Dados anteriores removidos')
 

@@ -173,3 +173,4 @@ export function ExercicioCard({ exercicio }: ExercicioCardProps) {
   )
 }
 
+

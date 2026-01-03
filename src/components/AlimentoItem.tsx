@@ -133,3 +133,4 @@ export function AlimentoItem({ alimento }: AlimentoItemProps) {
   )
 }
 
+

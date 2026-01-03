@@ -78,3 +78,4 @@ export async function deleteExercicio(id: string) {
   revalidatePath('/')
 }
 
+
